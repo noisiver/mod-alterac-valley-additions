@@ -5,6 +5,8 @@ enum
 {
     MAP_ALTERAC_VALLEY           = 30,
 
+    NPC_STORMPIKE_HERALD         = 11997,
+
     NPC_STORMPIKE_DEFENDER       = 12050,
     NPC_FROSTWOLF_GUARDIAN       = 12053,
 
@@ -14,7 +16,17 @@ enum
 
     NPC_FROSTWOLF_BATTLEGUARD    = 14285,
     NPC_FROST_WOLF_LEGIONNAIRE   = 12051,
-    NPC_FROST_WOLF_BLOODHOUND    = 14282
+    NPC_FROST_WOLF_BLOODHOUND    = 14282,
+
+    NPC_DUN_BALDAR_NORTH_MARSHAL = 14762,
+    NPC_DUN_BALDAR_SOUTH_MARSHAL = 14763,
+    NPC_ICEWING_MARSHAL          = 14764,
+    NPC_STONEHEARTH_MARSHAL      = 14765,
+
+    NPC_EAST_FROSTWOLF_WARMASTER = 14772,
+    NPC_ICEBLOOD_WARMASTER       = 14773,
+    NPC_TOWER_POINT_WARMASTER    = 14776,
+    NPC_WEST_FROSTWOLF_WARMASTER = 14777
 };
 
 class map_alterac_valley : public AllCreatureScript
@@ -30,6 +42,17 @@ public:
             {
                 switch (creature->GetEntry())
                 {
+                case NPC_STORMPIKE_HERALD:
+                case NPC_DUN_BALDAR_NORTH_MARSHAL:
+                case NPC_DUN_BALDAR_SOUTH_MARSHAL:
+                case NPC_ICEWING_MARSHAL:
+                case NPC_STONEHEARTH_MARSHAL:
+                case NPC_EAST_FROSTWOLF_WARMASTER:
+                case NPC_ICEBLOOD_WARMASTER:
+                case NPC_TOWER_POINT_WARMASTER:
+                case NPC_WEST_FROSTWOLF_WARMASTER:
+                    MoveCreature(creature);
+                    break;
                 case NPC_STORMPIKE_DEFENDER:
                 case NPC_FROSTWOLF_GUARDIAN:
                     MoveDefender(creature);
@@ -52,6 +75,47 @@ public:
     }
 
 private:
+    void MoveCreature(Creature* creature)
+    {
+        Position position = { 0, 0, 0, 0 };
+
+        switch (creature->GetEntry())
+        {
+        case NPC_STORMPIKE_HERALD:
+            position = { 813.699, -490.484, 100.237, 4.59146 };
+            break;
+        case NPC_DUN_BALDAR_NORTH_MARSHAL:
+            position = { 733.629, -19.121, 50.7046, 3.29867 };
+            break;
+        case NPC_DUN_BALDAR_SOUTH_MARSHAL:
+            position = { 727.49, 2.6156, 50.6213, 3.38787 };
+            break;
+        case NPC_ICEWING_MARSHAL:
+            position = { 728.8, -1.7032, 50.6214, 3.42085 };
+            break;
+        case NPC_STONEHEARTH_MARSHAL:
+            position = { 731.819, -13.6064, 50.7046, 3.43489 };
+            break;
+        case NPC_EAST_FROSTWOLF_WARMASTER:
+            position = { -1363.92, -235.26, 98.4822, 2.04204 };
+            break;
+        case NPC_ICEBLOOD_WARMASTER:
+            position = { -1359.823, -230.922, 98.4, 2.79365 };
+            break;
+        case NPC_TOWER_POINT_WARMASTER:
+            position = { -1370.85, -235.518, 98.5099, 1.20428 };
+            break;
+        case NPC_WEST_FROSTWOLF_WARMASTER:
+            position = { -1374.56, -232.24, 98.5099, 0.872665 };
+            break;
+        default:
+            break;
+        }
+
+        creature->SetHomePosition(position);
+        creature->SetPosition(position);
+    }
+
     void MoveDefender(Creature* creature)
     {
         float x, y, z, o;
